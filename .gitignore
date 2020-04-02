@@ -15,3 +15,5 @@
 # vendor/
 
 .idea/
+/flaggy/examples/
+/mpb/examples/
