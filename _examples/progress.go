@@ -4,8 +4,8 @@ import (
 	"math/rand"
 	"time"
 
-	"porter.win/library/mpb"
-	"porter.win/library/mpb/decor"
+	"github.com/robjporter/go-library/mpb"
+	"github.com/robjporter/go-library/mpb/decor"
 )
 
 func main() {

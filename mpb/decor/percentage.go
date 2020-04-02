@@ -5,7 +5,7 @@ import (
 	"io"
 	"strconv"
 
-	"github.com/vbauerster/mpb/v5/internal"
+	"github.com/robjporter/go-library/mpb/internal"
 )
 
 type percentageType float64

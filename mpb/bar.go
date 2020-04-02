@@ -10,7 +10,7 @@ import (
 	"time"
 	"unicode/utf8"
 
-	"github.com/vbauerster/mpb/v5/decor"
+	"github.com/robjporter/go-library/mpb/decor"
 )
 
 // BarFiller interface.

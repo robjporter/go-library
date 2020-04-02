@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"io"
 
-	"github.com/vbauerster/mpb/v5/decor"
+	"github.com/robjporter/go-library/mpb/decor"
 )
 
 // BarOption is a function option which changes the default behavior of a bar.

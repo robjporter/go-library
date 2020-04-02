@@ -4,8 +4,8 @@ import (
 	"io"
 	"unicode/utf8"
 
-	"github.com/vbauerster/mpb/v5/decor"
-	"github.com/vbauerster/mpb/v5/internal"
+	"github.com/robjporter/go-library/mpb/decor"
+	"github.com/robjporter/go-library/mpb/internal"
 )
 
 const (
