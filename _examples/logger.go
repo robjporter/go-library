@@ -40,7 +40,7 @@ func main() {
 	var test = logger.New("test")
 
 	timer = perf.Timer()
-	for i := 0; i < 999999; i++ {
+	for i := 0; i < 50; i++ {
 		t := test.Timer()
 		t.End("foobar %s", "yoyo", logger.Attrs{
 			"foo": 123,
@@ -91,7 +91,7 @@ func main() {
 	go db.Info("Connecting to mysql://azer@localhost:9900/foobar")
 	go images.Info("Requesting an image at foo/bar.jpg")
 
-	timer := images.Timer()
+	timer = images.Timer()
 	time.Sleep(time.Millisecond * 250)
 	timer.End("Fetched foo/bar.jpg")
 
@@ -101,7 +101,7 @@ func main() {
 
 	socket.Info("Connecting...")
 
-	err := errors.New("Unable to connect.")
+	err = errors.New("Unable to connect.")
 	socket.Error("%v", err)
 
 	time.Sleep(time.Millisecond * 250)
