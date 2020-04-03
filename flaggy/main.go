@@ -1,10 +1,4 @@
-// Package flaggy is a input flag parsing package that supports recursive
-// subcommands, positional values, and any-position flags without
-// unnecessary complexeties.
-//
-// For a getting started tutorial and full feature list, check out the
-// readme at https://github.com/integrii/flaggy.
-package flaggy // import "github.com/integrii/flaggy"
+package flaggy
 
 import (
 	"fmt"
