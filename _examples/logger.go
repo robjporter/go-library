@@ -1,3 +1,5 @@
+// LOG=* go run logger.go
+
 package main
 
 import (
