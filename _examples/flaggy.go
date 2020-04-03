@@ -1,11 +1,6 @@
 package main
 
 import (
-	"fmt"
-	"math/rand"
-	"sync"
-	"time"
-
 	"github.com/robjporter/go-library/flaggy"
 )
 
