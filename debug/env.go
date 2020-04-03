@@ -8,15 +8,10 @@ import (
 var _GODEBUG_ITEMS_ = make(map[string]string)
 
 func init() {
-	if v := os.Getenv("GODEBUG"); v != "" {
-		items := strings.Split(v, ",")
-		for _, item := range items {
-			pair := strings.Split(item, "=")
-			if len(pair) != 2 {
-				continue
-			}
-			_GODEBUG_ITEMS_[pair[0]] = pair[1]
-		}
+	tmp := os.Environ()
+	for i := 0; i < len(tmp); i++ {
+		item := strings.Split(tmp[i], "=")
+		_GODEBUG_ITEMS_[item[0]] = item[1]
 	}
 }
 
