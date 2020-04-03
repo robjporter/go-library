@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"os/user"
+	"runtime"
 )
 
 func GetCurrentUser(username *string) error {
@@ -29,4 +30,6 @@ func main() {
 	}
 
 	fmt.Println("username: ",username)
+
+	Print("KatWeb " + currentVersion + ", built for " + runtime.GOOS + "-" + runtime.GOARCH + ", using " + runtime.Compiler + " compiler.")
 }
