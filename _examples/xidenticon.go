@@ -30,15 +30,15 @@ func main() {
 
 func SingleBanner() {
 	// Just create a new identicon
-	ic, err := identicon.New(
+	ic, err := xidenticon.New(
 
 		// The identicon ID string is mandatory.
 		// Same string will always result in the same generated identicon.
 		// Typically this is a username or email address.
 		"jack@example.com",
 		// You can define custom options or pass nil for defaults
-		&identicon.Options{
-			BackgroundColor: identicon.RGB(240, 240, 240),
+		&xidenticon.Options{
+			BackgroundColor: xidenticon.RGB(240, 240, 240),
 		},
 	)
 	if err != nil {
@@ -73,13 +73,13 @@ func MultipleBanner() {
 
 	// Create banner and fill background
 	banner := image.NewRGBA(image.Rect(0, 0, x1, y1))
-	draw.Draw(banner, image.Rect(0, 0, x1, y1), &image.Uniform{identicon.RGB(255, 255, 255)}, image.ZP, draw.Src)
+	draw.Draw(banner, image.Rect(0, 0, x1, y1), &image.Uniform{xidenticon.RGB(255, 255, 255)}, image.ZP, draw.Src)
 
 	// Iterate IDs
 	for i, id := range genIDs {
 
 		// Create a new identicon
-		ic, err := identicon.New(id, nil)
+		ic, err := xidenticon.New(id, nil)
 		if err != nil {
 			log.Fatal(err)
 		}

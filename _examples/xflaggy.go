@@ -11,19 +11,19 @@ func main() {
 	var stringFlag2 = "defaultValue"
 
 	// Add a flag
-	flaggy.String(&stringFlag, "f", "flag", "A test string flag")
+	xflaggy.String(&stringFlag, "f", "flag", "A test string flag")
 
 	// Create the subcommand
-	subcommand := flaggy.NewSubcommand("subcommandExample")
+	subcommand := xflaggy.NewSubcommand("subcommandExample")
 
 	// Add a flag to the subcommand
 	subcommand.String(&stringFlag2, "g", "flag", "A test string flag")
 
 	// Add the subcommand to the parser at position 1
-	flaggy.AttachSubcommand(subcommand, 1)
+	xflaggy.AttachSubcommand(subcommand, 1)
 
 	// Parse the flag
-	flaggy.Parse()
+	xflaggy.Parse()
 
 	// Use the flag
 	fmt.Println("stringFlag: ",stringFlag)

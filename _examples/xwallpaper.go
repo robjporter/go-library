@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	background, err := wallpaper.Get()
+	background, err := xwallpaper.Get()
 
 	if err != nil {
 		panic(err)
@@ -15,5 +15,5 @@ func main() {
 
 	fmt.Println("Current wallpaper:", background)
 	//wallpaper.SetFromFile("/usr/share/backgrounds/gnome/adwaita-day.jpg")
-	wallpaper.SetFromURL("https://i.imgur.com/pIwrYeM.jpg")
+	xwallpaper.SetFromURL("https://i.imgur.com/pIwrYeM.jpg")
 }

@@ -11,31 +11,31 @@ func main() {
 	// Init
 	buckets := []string{"ownerBucket", "sensors"}
 
-	err := bolts.InitBolt("./database.boltdb", buckets)
+	err := xbolts.InitBolt("./database.boltdb", buckets)
 	if err != nil {
 		log.Fatal("Can't init boltDB")
 	}
 
 	// Put
-	err = bolts.Put([]byte("ownerBucket"), []byte("ownerKey"), []byte("username"))
+	err = xbolts.Put([]byte("ownerBucket"), []byte("ownerKey"), []byte("username"))
 	fmt.Println("PUT err: ", err)
 
 	// Get owner
-	value := bolts.Get([]byte("ownerBucket"), []byte("ownerKey"))
+	value := xbolts.Get([]byte("ownerBucket"), []byte("ownerKey"))
 	fmt.Println("GET value: ", string(value))
 
 	// Delete
-	err = bolts.Delete([]byte("ownerBucket"), []byte("ownerKey"))
+	err = xbolts.Delete([]byte("ownerBucket"), []byte("ownerKey"))
 	fmt.Println("DELETE err: ", err)
 
 	// Insert two key/value
-	err = bolts.Put([]byte("sensors"), []byte("key1"), []byte("value1"))
+	err = xbolts.Put([]byte("sensors"), []byte("key1"), []byte("value1"))
 	fmt.Println("PUT err: ", err)
-	err = bolts.Put([]byte("sensors"), []byte("key2"), []byte("value2"))
+	err = xbolts.Put([]byte("sensors"), []byte("key2"), []byte("value2"))
 	fmt.Println("PUT err: ", err)
 
 	// Get all keys
-	keys := bolts.GetAllKeys([]byte("sensors"))
+	keys := xbolts.GetAllKeys([]byte("sensors"))
 	// keys = [key1, key2]
 	fmt.Println("GETALLKEYS keys: ", keys)
 	for i := 0; i < len(keys); i++ {
@@ -43,7 +43,7 @@ func main() {
 	}
 
 	// Get all key/value pairs
-	pairs := bolts.GetAllKeyValues([]byte("sensors"))
+	pairs := xbolts.GetAllKeyValues([]byte("sensors"))
 	// pairs = [{Key:key1, Value:value1}, {Key: key2, Value:value2}]
 	fmt.Println("GETALLKEYVALUES pairs: ", pairs)
 	for i := 0; i < len(pairs); i++ {
@@ -51,5 +51,5 @@ func main() {
 	}
 
 	// Close
-	bolts.Close()
+	xbolts.Close()
 }

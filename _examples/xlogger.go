@@ -9,12 +9,12 @@ import (
 	"time"
 )
 
-var log = logger.New("app")
-var app = logger.New("app")
-var images = logger.New("images")
-var socket = logger.New("websocket")
-var users = logger.New("users")
-var db = logger.New("database")
+var log = xlogger.New("app")
+var app = xlogger.New("app")
+var images = xlogger.New("images")
+var socket = xlogger.New("websocket")
+var users = xlogger.New("users")
+var db = xlogger.New("database")
 
 type CustomWriter struct{}
 
@@ -22,7 +22,7 @@ func (customWriter *CustomWriter) Init() {
 
 }
 
-func (cw CustomWriter) Write(log *logger.Log) {
+func (cw CustomWriter) Write(log *xlogger.Log) {
 	fmt.Println("custom log -> ", log.Package, log.Level, log.Message, log.Attrs)
 }
 
@@ -38,13 +38,13 @@ func main() {
 	log.Error("Failed to start, shutting down...")
 
 // Timers
-	var perf = logger.New("performance")
-	var test = logger.New("test")
+	var perf = xlogger.New("performance")
+	var test = xlogger.New("test")
 
 	timer = perf.Timer()
 	for i := 0; i < 50; i++ {
 		t := test.Timer()
-		t.End("foobar %s", "yoyo", logger.Attrs{
+		t.End("foobar %s", "yoyo", xlogger.Attrs{
 			"foo": 123,
 			"bar": true,
 		})
@@ -52,21 +52,21 @@ func main() {
 	timer.End("End")
 
 // Attributes
-	log.Info("Sending an e-mail", logger.Attrs{
+	log.Info("Sending an e-mail", xlogger.Attrs{
 		"from": "foo@bar.com",
 		"to": "qux@corge.com",
 	})
 
 	err := errors.New("Too busy")
 
-	log.Error("Failed to send e-mail. Error: %s", err, logger.Attrs{
+	log.Error("Failed to send e-mail. Error: %s", err, xlogger.Attrs{
 		"from": "foo@bar.com",
 		"to": "qux@corge.com",
 	})
 
 	timer = log.Timer()
 	time.Sleep(time.Millisecond * 500)
-	timer.End("Created a new %s image", "bike", logger.Attrs{
+	timer.End("Created a new %s image", "bike", xlogger.Attrs{
 		"id": 123456,
 		"model": "bmx",
 		"frame": "purple",
@@ -74,10 +74,10 @@ func main() {
 	})
 
 // Custom Writer
-	logger.Hook(&CustomWriter{})
+	xlogger.Hook(&CustomWriter{})
 	log.Info("he-yo")
 
-	log.Info("Requesting an image", logger.Attrs{
+	log.Info("Requesting an image", xlogger.Attrs{
 		"file": "foo/bar.jpg",
 	})
 
