@@ -24,7 +24,7 @@
 //
 
 // Package aurora implements ANSI-colors
-package aurora
+package xaurora
 
 import (
 	"fmt"

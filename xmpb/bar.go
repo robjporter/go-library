@@ -1,4 +1,4 @@
-package mpb
+package xmpb
 
 import (
 	"bytes"

@@ -1,4 +1,4 @@
-module github.com/vbauerster/mpb/v5
+module github.com/vbauerster/xmpb/v5
 
 go 1.14
 

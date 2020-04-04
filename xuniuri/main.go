@@ -20,7 +20,7 @@
 //
 // Functions read from crypto/rand random source, and panic if they fail to
 // read from it.
-package uniuri
+package xuniuri
 
 import "crypto/rand"
 

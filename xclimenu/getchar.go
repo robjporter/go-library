@@ -1,4 +1,4 @@
-package climenu
+package xclimenu
 
 import "github.com/pkg/term"
 

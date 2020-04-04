@@ -1,6 +1,6 @@
 //+build linux
 
-package wallpaper
+package xwallpaper
 
 import (
 	"bufio"

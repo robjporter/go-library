@@ -1,4 +1,4 @@
-package flaggy
+package xflaggy
 
 // parsedValue represents a flag or subcommand that was parsed.  Primairily used
 // to account for all parsed values in order to determine if unknown values were

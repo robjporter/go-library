@@ -1,10 +1,10 @@
-package mpb
+package xmpb
 
 import (
 	"bytes"
 	"io"
 
-	"github.com/robjporter/go-library/mpb/decor"
+	"github.com/robjporter/go-library/xmpb/decor"
 )
 
 // BarOption is a function option which changes the default behavior of a bar.

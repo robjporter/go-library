@@ -1,4 +1,4 @@
-package bolts
+package xbolts
 
 import (
 	"log"

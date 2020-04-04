@@ -1,4 +1,4 @@
-module github.com/robjporter/go-library/climenu
+module github.com/robjporter/go-library/xclimenu
 
 go 1.14
 

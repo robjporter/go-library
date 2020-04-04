@@ -1,5 +1,5 @@
 // Package identicon helps generating deterministic user identicons
-package identicon
+package xidenticon
 
 import (
 	"crypto/md5"

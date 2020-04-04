@@ -1,4 +1,4 @@
-package mpb
+package xmpb
 
 // A priorityQueue implements heap.Interface
 type priorityQueue []*Bar

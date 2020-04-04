@@ -23,7 +23,7 @@
 //  0. You just DO WHAT THE FUCK YOU WANT TO.
 //
 
-package aurora
+package xaurora
 
 // Colorize wraps given value into Value with
 // given colors. For example

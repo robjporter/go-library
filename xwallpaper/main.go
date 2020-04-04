@@ -1,4 +1,4 @@
-package wallpaper
+package xwallpaper
 
 import (
 	"errors"

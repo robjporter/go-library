@@ -1,6 +1,6 @@
 // +build windows
 
-package wallpaper
+package xwallpaper
 
 import (
 	"os"

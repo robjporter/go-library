@@ -1,11 +1,11 @@
-package mpb
+package xmpb
 
 import (
 	"io"
 	"strings"
 	"unicode/utf8"
 
-	"github.com/robjporter/go-library/mpb/decor"
+	"github.com/robjporter/go-library/xmpb/decor"
 )
 
 // SpinnerAlignment enum.

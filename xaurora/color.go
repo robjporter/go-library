@@ -23,7 +23,7 @@
 //  0. You just DO WHAT THE FUCK YOU WANT TO.
 //
 
-package aurora
+package xaurora
 
 // A Color type is a color. It can contain
 // one background color, one foreground color
