@@ -12,39 +12,24 @@ import (
 
 	"github.com/robjporter/go-library/xas"
 	"gopkg.in/yaml.v2"
-	"time"
 )
 
-type expire struct {
-	expiry  time.Time
-	access  time.Time
-	expires time.Duration
-}
-
 type Config struct {
-	root    interface{}
-	Expiry  time.Duration
-	expires map[interface{}]*expire
+	root interface{}
 }
 
-// ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 // CONSTRUCTOR
-// ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 var cfg = New()
 
-func New(expiry ...time.Duration) *Config {
-	c := &Config{root: make(map[interface{}]interface{}), expires: make(map[interface{}]*expire)}
-	if expiry != nil {
-		c.Expiry = expiry[0]
-	} else {
-		c.Expiry = 1<<63 - 1
-	}
-	return c
+func New() *Config {
+	return &Config{root: make(map[interface{}]interface{})}
 }
 
-// ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 // PUBLIC KEYS
-// ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 func GetKeys() ([]string, error) { return cfg.GetKeys() }
 func (cfg *Config) GetKeys() ([]string, error) {
 	var keys []string
@@ -55,9 +40,9 @@ func (cfg *Config) GetKeys() ([]string, error) {
 	return keys, nil
 }
 
-// ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 // PUBLIC SIZE
-// ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 func Size() (int, error) { return cfg.Size() }
 func (cfg *Config) Size() (int, error) {
 	var keys []string
@@ -68,9 +53,9 @@ func (cfg *Config) Size() (int, error) {
 	return len(keys), nil
 }
 
-// ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 // PUBLIC READ FILES
-// ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 func ReadFiles(files ...string) { cfg.ReadFiles(files...) }
 func (cfg *Config) ReadFiles(files ...string) {
 	for _, file := range files {
@@ -85,12 +70,12 @@ func (cfg *Config) ReadFiles(files ...string) {
 	}
 }
 
-// ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 // PUBLIC READ STRING
-// ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 func (cfg *Config) ReadString(config string) error {
 	tmp := new(Config)
-	err := tmp.readBuffer(xas.ToBytes(config))
+	err := tmp.readBuffer(as.ToBytes(config))
 	if err == nil {
 		merge(&cfg.root, &tmp.root)
 		return nil
@@ -99,9 +84,9 @@ func (cfg *Config) ReadString(config string) error {
 	}
 }
 
-// ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 // INTERNAL SUPPORTING READ
-// ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 func (cfg *Config) readBuffer(buff []byte) error {
 	return yaml.Unmarshal(buff, &cfg.root)
 }
@@ -118,14 +103,14 @@ func (cfg *Config) readEnv(prefix string) error {
 	return nil
 }
 
-// ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 // PUBLIC SUB
-// ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 func Sub(path string) *Config { return cfg.Sub(path) }
 func (cfg *Config) Sub(path string) *Config {
 	data, err := cfg.Get(path)
 	if err != nil {
-		// fmt.Printf("Failed to get %s\n", path)
+		fmt.Printf("Failed to get %s\n", path)
 		return nil
 	}
 
@@ -134,66 +119,24 @@ func (cfg *Config) Sub(path string) *Config {
 	return &ncfg
 }
 
-func Remove(path string) (bool, error) { return cfg.Remove(path) }
-func (cfg *Config) Remove(path string) (bool, error) {
-	cfg.expires[path] = nil
-	return true, nil
-}
-
-func remove(path string, data *interface{}) {
-	m, ok := (*data).(map[interface{}]interface{})
-	if ok {
-		for k, _ := range m {
-			if path == k {
-				m[path] = nil
-			}
-		}
-	}
-}
-
-// ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 // PUBLIC GET
-// ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 func Get(path string) (interface{}, error) { return cfg.Get(path) }
 func (cfg *Config) Get(path string) (interface{}, error) {
 	val, err := get(path, cfg.root)
 	if err != nil {
-		// fmt.Printf("Failed to get path: %s\n", path)
-		// fmt.Printf("%s\n", err.Error())
-	} else {
-		n := time.Now()
-		cfg.expires[path].access = n
-		if cfg.expires[path].expiry.After(n) {
-			return val, err
-		}
-		return nil, errors.New("Item has expired.")
+		fmt.Printf("Failed to get path: %s\n", path)
+		fmt.Printf("%s\n", err.Error())
 	}
 	return val, err
-}
-
-func GetStringSlice(path string) ([]string, error) { return cfg.GetStringSlice(path) }
-func (cfg *Config) GetStringSlice(path string) ([]string, error) {
-	tmp, err := cfg.Get(path)
-	if err == nil {
-		n := time.Now()
-		if cfg.expires[path].expiry.After(n) {
-			return tmp.([]string), nil
-		}
-		return nil, errors.New("Key missing or expired.")
-	} else {
-		return nil, err
-	}
 }
 
 func GetSlice(path string) ([]interface{}, error) { return cfg.GetSlice(path) }
 func (cfg *Config) GetSlice(path string) ([]interface{}, error) {
 	tmp, err := cfg.Get(path)
 	if err == nil {
-		n := time.Now()
-		if cfg.expires[path].expiry.After(n) {
-			return tmp.([]interface{}), nil
-		}
-		return nil, errors.New("Key missing or expired.")
+		return tmp.([]interface{}), nil
 	} else {
 		return nil, err
 	}
@@ -203,11 +146,7 @@ func GetSliceSize(path string) (int, error) { return cfg.GetSliceSize(path) }
 func (cfg *Config) GetSliceSize(path string) (int, error) {
 	tmp, err := cfg.Get(path)
 	if err == nil {
-		n := time.Now()
-		if cfg.expires[path].expiry.After(n) {
-			return len(tmp.([]interface{})), nil
-		}
-		return -1, errors.New("Key missing or expired.")
+		return len(tmp.([]interface{})), nil
 	} else {
 		return -1, err
 	}
@@ -237,11 +176,7 @@ func (cfg *Config) GetString(path string) string {
 		if !ok {
 			return ""
 		} else {
-			n := time.Now()
-			if cfg.expires[path].expiry.After(n) {
-				return str
-			}
-			return ""
+			return str
 		}
 	}
 }
@@ -256,11 +191,7 @@ func (cfg *Config) GetInt(path string) int {
 		if !ok {
 			return 0
 		} else {
-			n := time.Now()
-			if cfg.expires[path].expiry.After(n) {
-				return num
-			}
-			return 0
+			return num
 		}
 	}
 }
@@ -269,7 +200,7 @@ func GetBool(path string) bool { return cfg.GetBool(path) }
 func (cfg *Config) GetBool(path string) bool {
 	val, err := cfg.Get(path)
 	if err != nil {
-		// fmt.Printf("No such value")
+		fmt.Printf("No such value")
 		return false
 	} else {
 		b, ok := val.(bool)
@@ -277,11 +208,7 @@ func (cfg *Config) GetBool(path string) bool {
 			fmt.Printf("Mismatched type")
 			return false
 		} else {
-			n := time.Now()
-			if cfg.expires[path].expiry.After(n) {
-				return b
-			}
-			return false
+			return b
 		}
 	}
 }
@@ -290,7 +217,7 @@ func GetFloat(path string) float64 { return cfg.GetFloat(path) }
 func (cfg *Config) GetFloat(path string) float64 {
 	val, err := cfg.Get(path)
 	if err != nil {
-		// fmt.Printf("No such value")
+		fmt.Printf("No such value")
 		return float64(-1)
 	} else {
 		b, ok := val.(float64)
@@ -298,41 +225,23 @@ func (cfg *Config) GetFloat(path string) float64 {
 			fmt.Printf("Mismatched type")
 			return float64(-1)
 		} else {
-			n := time.Now()
-			if cfg.expires[path].expiry.After(n) {
-				return b
-			}
-			return 0.0
+			return b
 		}
 	}
 }
 
-// ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 // PUBLIC SET
-// ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 func Set(path string, value interface{}) { cfg.Set(path, value) }
 func (cfg *Config) Set(path string, value interface{}) {
 	data := build(path, value)
 	merge(&cfg.root, &data)
-	n := time.Now()
-	exp := n.Add(cfg.Expiry)
-	tmp := &expire{expiry: exp, access: n}
-	cfg.expires[path] = tmp
 }
 
-func SetCustom(path string, value interface{}, expirys time.Duration) { cfg.SetCustom(path, value, expirys) }
-func (cfg *Config) SetCustom(path string, value interface{}, expirys time.Duration) {
-	data := build(path, value)
-	merge(&cfg.root, &data)
-	n := time.Now()
-	exp := n.Add(expirys)
-	tmp := &expire{expiry: exp, access: n}
-	cfg.expires[path] = tmp
-}
-
-// ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 // PUBLIC OUTPUT
-// ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 func AllSettings() map[string]interface{} { return cfg.AllSettings() }
 func (cfg *Config) AllSettings() map[string]interface{} {
 	all_settings := map[string]interface{}{}
@@ -340,17 +249,17 @@ func (cfg *Config) AllSettings() map[string]interface{} {
 	return all_settings
 }
 
-// ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 // PUBLIC SIZE
-// ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 func (cfg *Config) Len() int {
 	all_settings := cfg.AllSettings()
 	return len(all_settings)
 }
 
-// ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 // PUBLIC ENVIRONMENT
-// ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 func BindEnvs(prefix string) {
 	prefix = prefix + "_"
 	for _, line := range os.Environ() {
@@ -365,9 +274,9 @@ func BindEnvs(prefix string) {
 	}
 }
 
-// ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 // PRIVATE
-// ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 func merge(dst, src *interface{}) {
 	src_kind := reflect.TypeOf(*src).Kind()
 	dst_kind := reflect.TypeOf(*dst).Kind()
@@ -407,10 +316,8 @@ func get(path string, data interface{}) (interface{}, error) {
 	if path == "" {
 		return data, nil
 	}
-
 	segs := strings.Split(path, ".")
 	seg := segs[0]
-
 	data_map, ok := data.(map[interface{}]interface{})
 	if !ok {
 		return nil, errors.New("Mismatched type")
@@ -422,6 +329,7 @@ func get(path string, data interface{}) (interface{}, error) {
 	}
 
 	return get(strings.Join(segs[1:], "."), val)
+
 }
 
 func build(path string, value interface{}) interface{} {
@@ -470,9 +378,9 @@ func guess(str string) interface{} {
 	return str
 }
 
-// ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 // WRITE OUT
-// ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 func (cfg *Config) WriteYaml(filename string) error {
 	out, err := yaml.Marshal(cfg.root)
 	if err == nil {
@@ -497,9 +405,9 @@ func (cfg *Config) WriteJson(filename string) error {
 	return nil
 }
 
-// ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 // UNUSED
-// ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 func convert(i interface{}) interface{} {
 	switch x := i.(type) {
 	case map[interface{}]interface{}:
