@@ -147,7 +147,6 @@ func (e *Env) BuildStamp() int64 {
 	return s
 }
 
-
 func (e *Env) Compiler() string {
 	return runtime.Compiler
 }
