@@ -1,13 +1,20 @@
 package xenv
 
 import (
+	"bytes"
 	"fmt"
 	"os"
+	"os/exec"
 	"os/user"
 	"runtime"
 	"strings"
 	"strconv"
 	"time"
+)
+
+var (
+	Prefix = ""
+	debug  = os.Getenv("BUILDDEBUG") != ""
 )
 
 type Env struct {
@@ -69,7 +76,7 @@ func (e *Env) GetString(key string) string {
 }
 
 func (e *Env) GetAsBool(key string) bool {
-	val := strings.ToLower(strings.TrimSpace(e.Get(key)))
+	val := strings.ToLower(strings.TrimSpace(e.GetString(key)))
 	switch val {
 	case "0", "no", "false":
 		return false
@@ -82,20 +89,20 @@ func (e *Env) GetAsBool(key string) bool {
 }
 
 func (e *Env) GetAsInt(key string) int {
-	i, _ := strconv.Atoi(strings.ToLower(strings.TrimSpace(e.Get(key))))
+	i, _ := strconv.Atoi(strings.ToLower(strings.TrimSpace(e.GetString(key))))
 	return i
 }
 
 func (e *Env) GetUsername() string {
-	u, e := user.Current()
-	if e != nil {
+	u, err := user.Current()
+	if err != nil {
 		return ""
 	}
 	return u.Username
 }
 
 func (e *Env) GOPATHBIN() string {
-	return os.Getenv("GOPATH") + PathSeparator() + "bin"
+	return os.Getenv("GOPATH") + e.PathSeparator() + "bin"
 }
 
 func (e *Env) PathSeparator() string {
@@ -115,10 +122,6 @@ func (e *Env) IsCompiled() bool {
 	return true
 }
 
-func (e *Env) BuildDebug() bool {
-	return debug
-}
-
 func (e *Env) CheckArchitecture() bool {
 	switch runtime.GOARCH {
 	case "386", "amd64":
@@ -136,7 +139,7 @@ func (e *Env) BuildStamp() int64 {
 	if s, _ := strconv.ParseInt(os.Getenv("SOURCE_DATE_EPOCH"), 10, 64); s > 0 {
 		return s
 	}
-	bs, err := runError("git", "show", "-s", "--format=%ct")
+	bs, err := e.runError("git", "show", "-s", "--format=%ct")
 	if err != nil {
 		return time.Now().Unix()
 	}
@@ -174,9 +177,26 @@ func (e *Env) GOPATH() string {
 }
 
 func (e *Env) GetFormattedTime() string {
-	return Now("Monday, 2 Jan 2006")
+	return time.Now().Format("Monday, 2 Jan 2006")
 }
 
 func (e *Env) Now(layout string) string {
 	return time.Now().Format(layout)
+}
+
+func (e *Env) BuildDebug() bool {
+	return debug
+}
+
+func (e *Env) runError(cmd string, args ...string) ([]byte, error) {
+	if debug {
+		t0 := time.Now()
+		fmt.Println("runError:", cmd, strings.Join(args, " "))
+		defer func() {
+			fmt.Println("... in", time.Since(t0))
+		}()
+	}
+	ecmd := exec.Command(cmd, args...)
+	bs, err := ecmd.CombinedOutput()
+	return bytes.TrimSpace(bs), err
 }

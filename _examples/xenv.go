@@ -8,7 +8,7 @@ import (
 func main() {
 	env := xenv.New()
 	fmt.Println("SIZE: ", env.Size())
-	fmt.Println(env.Get("GOPATH"))
+	fmt.Println(env.GetString("GOPATH"))
 	fmt.Println("SIZE: ", env.Size())
 	env.AddString("TEST", "TESTING")
 	fmt.Println("SIZE: ", env.Size())
