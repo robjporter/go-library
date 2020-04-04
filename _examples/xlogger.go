@@ -3,7 +3,7 @@
 package main
 
 import (
-	"github.com/robjporter/go-library/logger"
+	"github.com/robjporter/go-library/xlogger"
 	"errors"
 	"fmt"
 	"time"

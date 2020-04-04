@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/robjporter/go-library/bolts"
+	"github.com/robjporter/go-library/xbolts"
 )
 
 func main() {

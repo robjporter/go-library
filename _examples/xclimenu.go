@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/robjporter/go-library/climenu"
+	"github.com/robjporter/go-library/xclimenu"
 )
 
 func callback(id string) {

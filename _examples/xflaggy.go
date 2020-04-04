@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/robjporter/go-library/flaggy"
+	"github.com/robjporter/go-library/xflaggy"
 )
 
 func main() {

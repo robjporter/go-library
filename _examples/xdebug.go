@@ -6,7 +6,7 @@ import (
 	"os"
 	"runtime"
 
-	. "github.com/robjporter/go-library/debug"
+	. "github.com/robjporter/go-library/xdebug"
 )
 
 type MyData struct {

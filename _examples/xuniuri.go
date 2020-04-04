@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/robjporter/go-library/uniuri"
+	"github.com/robjporter/go-library/xuniuri"
 )
 
 var StdChars = []byte("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,/-=[]{};:~")

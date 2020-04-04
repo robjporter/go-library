@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/robjporter/go-library/wallpaper"
+	"github.com/robjporter/go-library/xwallpaper"
 )
 
 func main() {

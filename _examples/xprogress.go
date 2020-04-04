@@ -6,8 +6,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/robjporter/go-library/mpb"
-	"github.com/robjporter/go-library/mpb/decor"
+	"github.com/robjporter/go-library/xmpb"
+	"github.com/robjporter/go-library/xmpb/decor"
 )
 
 func main() {
