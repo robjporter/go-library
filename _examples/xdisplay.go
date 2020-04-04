@@ -10,5 +10,6 @@ func main() {
 	d := xdisplay.New()
 	d.ClearScreen()
 
-	fmt.Println("Terminal Size: ", d.TerminalSize())
+	a, b, err := d.TerminalSize()
+	fmt.Println("Terminal Size: ", a, "x", b, "x", err)
 }

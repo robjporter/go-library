@@ -7,6 +7,6 @@ import (
 func main() {
 	g := xicons.New()
 	g.PrintIconStyles()
-	g.PrintIcon("cross")
+	g.PrintIcon("apple")
 	g.PrintIcon("alien")
 }

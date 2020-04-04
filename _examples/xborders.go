@@ -11,8 +11,38 @@ func main() {
 	lines = append(lines, "")
 
 	g := xborders.New()
-	g.Borders.SetBorderStyle("circles")
-	g.Borders.SetContent(lines)
-	g.Borders.SetSpacer(12)
-	g.Borders.PrintBorder(true)
+	g.SetBorderStyle("circles")
+	g.SetContent(lines)
+	g.SetSpacer(12)
+	g.PrintBorder(true)
+
+	g.SetBorderStyle("say")
+	g.PrintBorder(true)
+
+	g.SetBorderStyle("classicish")
+	g.PrintBorder(true)
+
+	g.SetBorderStyle("think")
+	g.PrintBorder(true)
+
+	g.SetBorderStyle("unicode")
+	g.PrintBorder(true)
+
+	g.SetBorderStyle("thick")
+	g.PrintBorder(true)
+
+	g.SetBorderStyle("rounded")
+	g.PrintBorder(true)
+
+	g.SetBorderStyle("bigger")
+	g.PrintBorder(true)
+
+	g.SetBorderStyle("fancy")
+	g.PrintBorder(true)
+
+	g.SetBorderStyle("fancy2")
+	g.PrintBorder(true)
+
+	g.SetBorderStyle("blocks")
+	g.PrintBorder(true)
 }
