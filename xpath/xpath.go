@@ -34,11 +34,10 @@ func New(path string) (Path, error) {
 		if err != nil {
 			return Path{}, err
 		}
-		p.UpdatePath(p.ensurePathEndSlash(fullPath))
+		p.UpdatePath(fullPath))
 	} else {
-		p.UpdatePath(p.ensurePathEndSlash(path))
+		p.UpdatePath(path)
 	}
-	fmt.Println(p)
 	return p, nil
 }
 
@@ -50,7 +49,7 @@ func (p *Path) ensurePathEndSlash(path string) string {
 }
 
 func (p *Path) UpdatePath(path string) *Path {
-	p.path = path
+	p.path = p.ensurePathEndSlash(path)
 	return p
 }
 
