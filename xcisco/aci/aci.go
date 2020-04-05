@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/robjporter/go-library/xas"
-	"github.com/robjporter/go-library/xrequest"
+	"github.com/robjporter/go-library/xrequests"
 )
 
 const (

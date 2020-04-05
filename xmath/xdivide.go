@@ -23,7 +23,7 @@ func DivideDetail(a, b int) float64 {
 func DivideDetailRound(a, b, c int) float64 {
 	if a > 0 && b > 0 {
 		value := float64(a) / float64(b)
-		return Round(value, c)
+		return Rounded(value, c)
 	} else {
 		return 0.0
 	}
@@ -38,7 +38,7 @@ func Remainder(a, b int) float64 {
 	}
 }
 
-func Round(v float64, d int) float64 {
+func Rounded(v float64, d int) float64 {
 	return RoundPrecise(v, 1, d)
 }
 
