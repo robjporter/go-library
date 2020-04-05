@@ -2,6 +2,7 @@ package xstrings
 
 import (
 	"bytes"
+	"math"
 	"math/rand"
 	"fmt"
 	"io"
@@ -13,6 +14,7 @@ import (
 	"encoding/hex"
 	"crypto/sha256"
 	rand2 "crypto/rand"
+	"github.com/robjporter/go-library/xas"
 )
 
 const (
@@ -230,6 +232,27 @@ func snaker(s string, wordSeparator rune, firstRune func(rune) rune, firstRuneOf
 	return string(newS)
 }
 
+func ordinise(number int) string {
+	switch int(math.Abs(float64(number))) % 100 {
+	case 11, 12, 13:
+		return "th"
+	default:
+		switch int(math.Abs(float64(number))) % 10 {
+		case 1:
+			return "st"
+		case 2:
+			return "nd"
+		case 3:
+			return "rd"
+		}
+	}
+	return "th"
+}
+
+func ToOrdinise(number int) string {
+	return xas.ToString(number) + ordinise(number)
+}
+
 func RandStringWithLengthLimit(n int) string {
 	b := make([]byte, n)
 	// A src.Int63() generates 63 random bits, enough for letterIdxMax characters!
@@ -246,6 +269,13 @@ func RandStringWithLengthLimit(n int) string {
 	}
 
 	return string(b)
+}
+
+func Announcement(message string) string {
+	length := len(message)
+	t := strings.Repeat("=", length)
+	mess := t + "\n" + message + "\n" + t
+	return mess
 }
 
 func Sha1(in string) string {

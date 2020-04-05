@@ -33,4 +33,27 @@ func main() {
 	fmt.Println(xstrings.Sha1("InString"))
 	fmt.Println(xstrings.Sha256("InString"))
 	fmt.Println(xstrings.MaskString("TESTING", "TESTINGTESTING", 4, 22))
+
+	fmt.Println(xstrings.Announcement())
+
+	fmt.Println("")
+	fmt.Println("JSON *******************************************************")
+	x := map[string]interface{}{"number": 1, "string": "cool", "bool": true, "float": 1.5}
+	fmt.Println("Non pretty JSON                   >", x)
+	output, _ := xstrings.PrettyJson(x)
+	fmt.Println("Pretty JSON                       >", output)
+
+	fmt.Println("")
+	fmt.Println("ORDINISE ***************************************************")
+	fmt.Println("ToOrdinise(1)                     >", xstrings.ToOrdinise(1))
+	fmt.Println("ToOrdinise(2)                     >", xstrings.ToOrdinise(2))
+	fmt.Println("ToOrdinise(3)                     >", xstrings.ToOrdinise(3))
+	fmt.Println("ToOrdinise(4)                     >", xstrings.ToOrdinise(4))
+	fmt.Println("ToOrdinise(6)                     >", xstrings.ToOrdinise(6))
+	fmt.Println("ToOrdinise(11)                    >", xstrings.ToOrdinise(11))
+	fmt.Println("ToOrdinise(21)                    >", xstrings.ToOrdinise(21))
+	fmt.Println("ToOrdinise(22)                    >", xstrings.ToOrdinise(22))
+	fmt.Println("ToOrdinise(23)                    >", xstrings.ToOrdinise(23))
+	fmt.Println("ToOrdinise(24)                    >", xstrings.ToOrdinise(24))
+
 }
