@@ -43,9 +43,11 @@ func New(path string) (Path, error) {
 }
 
 func (p *Path) ensurePathEndSlash() {
+	fmt.Println(p.path)
 	if p.path[len(p.path) - 1:len(p.path)] != SLASH {
 		p.path += SLASH
 	}
+	fmt.Println(p.path)
 }
 
 func (p *Path) UpdatePath(path string) *Path {
