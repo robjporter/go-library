@@ -21,7 +21,7 @@ func main() {
 	fmt.Println(p)
 	p.UpdatePath(dir)
 	fmt.Println(p)
-	fmt.Println("Path:                          >", dir)
+	fmt.Println("Path:                          >", p.GetRawPath())
 	fmt.Println("Splitpath:                     >", p.SplitPath())
 	fmt.Println("Get Path:                      >", p.GetPath())
 	fmt.Println("Get File MD5:                  >", p.GetFileMd5("xas.go"))

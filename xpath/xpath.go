@@ -48,9 +48,12 @@ func (p *Path) ensurePathEndSlash(path string) string {
 	return path
 }
 
-func (p *Path) UpdatePath(path string) Path {
+func (p *Path) GetRawPath() string {
+	return p.path
+}
+
+func (p *Path) UpdatePath(path string) {
 	p.path = p.ensurePathEndSlash(path)
-	return *p
 }
 
 func (p *Path) SplitPath() []string {
@@ -92,6 +95,7 @@ func (p *Path) ParentPath() string {
 }
 
 func (p *Path) GetFileMd5(filename string) string {
+	fmt.Println("GetFileMd5: ",p)
 	f, err := os.Open(p.path + filename)
 	if err != nil {
 		panic(err.Error())
