@@ -1,11 +1,11 @@
 package ucs
-
+/*
 import (
 	//"fmt"
 
 	"strings"
 
-	"github.com/robjporter/go-utils/go/as"
+	"github.com/robjporter/go-library/xas"
 	xmlx "github.com/robjporter/go-utils/go/encode/xml"
 	"github.com/robjporter/go-utils/web/request"
 )
@@ -297,3 +297,4 @@ func (u *UCSM) getServerDetail(dn string) UCSBladeInfo {
 	return server
 
 }
+*/

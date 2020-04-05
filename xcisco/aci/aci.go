@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"strings"
 
-	"github.com/robjporter/go-utils/go/as"
-	"github.com/robjporter/go-utils/web/request"
+	"github.com/robjporter/go-library/xas"
+	"github.com/robjporter/go-library/xrequest"
 )
 
 const (

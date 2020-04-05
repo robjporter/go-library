@@ -1,10 +1,10 @@
 package ucs
-
+/*
 import (
 	"fmt"
 	"strings"
 
-	"github.com/robjporter/go-utils/web/request"
+	"github.com/robjporter/go-library/xrequest"
 )
 
 const (
@@ -26,7 +26,7 @@ var (
 // SETUP FUNCTION
 
 func GetWebData() {
-	code := request.New()
+	code := xrequest.New()
 	resp, body, err := code.Get("https://software.cisco.com/download/release.html?mdfid=283612660&softwareid=283655658").End()
 	if resp.StatusCode == 200 && err == nil {
 		if body != "" {
@@ -298,3 +298,4 @@ func isInSlice(str []string, train string) bool {
 	}
 	return false
 }
+*/

@@ -5,6 +5,11 @@ import (
 	"encoding/json"
 )
 
+const (
+	empty = ""
+	tab = "    "
+)
+
 func PrettyJson(data interface{}) (string, error) {
 	buffer := new(bytes.Buffer)
 	encoder := json.NewEncoder(buffer)

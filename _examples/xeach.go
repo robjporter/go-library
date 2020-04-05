@@ -13,6 +13,6 @@ func main() {
 		fmt.Println(s.(string))
 	}
 	s := []string{"a", "b", "c"}
-
+	fmt.Println("EACH *******************************************************")
 	xeach.Each(s, fn)
 }

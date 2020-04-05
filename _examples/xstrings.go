@@ -34,7 +34,7 @@ func main() {
 	fmt.Println(xstrings.Sha256("InString"))
 	fmt.Println(xstrings.MaskString("TESTING", "TESTINGTESTING", 4, 22))
 
-	fmt.Println(xstrings.Announcement())
+	fmt.Println(xstrings.Announcement("This is an announcement"))
 
 	fmt.Println("")
 	fmt.Println("JSON *******************************************************")
@@ -42,6 +42,7 @@ func main() {
 	fmt.Println("Non pretty JSON                   >", x)
 	output, _ := xstrings.PrettyJson(x)
 	fmt.Println("Pretty JSON                       >", output)
+	fmt.Println("Compact JSON                      >", xstrings.CompactJSON(output))
 
 	fmt.Println("")
 	fmt.Println("ORDINISE ***************************************************")
