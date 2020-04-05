@@ -1,13 +1,16 @@
 package xpath
 
 import (
+	"bytes"
 	"crypto/md5"
 	"encoding/hex"
 	"errors"
 	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 )
@@ -223,6 +226,7 @@ func (p *Path) RelativePath(filename string) string {
 		rfile = strings.TrimLeft(rfile, SLASH)
 	} else {
 		rfile = strings.TrimLeft(rfile, SLASH)
+		if rfile == "" {rfile = "./"}
 	}
 	return rfile
 }
@@ -341,4 +345,117 @@ func (p *Path) FileExtension(filename string) string {
 		}
 	}
 	return ""
+}
+
+func (p *Path) Run(cmd string, shell bool) (string, error) {
+	if shell {
+		cmd2 := exec.Command("sh", "-c", cmd)
+		var outb, errb bytes.Buffer
+		cmd2.Stdout = &outb
+		cmd2.Stderr = &errb
+		err := cmd2.Run()
+		if err != nil {
+			log.Fatal(err)
+		}
+		return outb.String(), err
+	} else {
+		out, err := exec.Command(cmd).Output()
+		if err != nil {
+			log.Fatal(err)
+		}
+		return string(out), err
+	}
+}
+
+func (p *Path) ListAll() []string {
+	return p.list(All, true, "*")
+}
+
+func (p *Path) ListFiles() []string {
+	return p.list(Files, false, "*")
+}
+
+func (p *Path) ListFilesAll() []string {
+	return p.list(Files, true, "*")
+}
+
+func (p *Path) ListFolders() []string {
+	return p.list(Folders, false, "*")
+}
+
+func (p *Path) ListFoldersAll() []string {
+	return p.list(Folders, true, "*")
+}
+
+func (p *Path) ListFilesType(ext string) []string {
+	return p.list(Files, true, ext)
+}
+
+func (p *Path) list(s int, hidden bool, extension string) []string {
+	var output []string
+	files, _ := ioutil.ReadDir(p.path)
+	for _, f := range files {
+		if p.shouldInclude(s, hidden, f, extension) {
+			output = append(output, f.Name())
+		}
+	}
+	return output
+}
+
+func (p *Path) getExtension(f string) string {
+	splits := strings.Split(f, ".")
+	if len(splits) > 0 {
+		return splits[len(splits)-1]
+	}
+	return ""
+}
+
+func (p *Path) shouldInclude(s int, h bool, f os.FileInfo, e string) bool {
+	if s == 0 {
+		return true
+	} else if s == 1 {
+		if f.IsDir() {
+			return false
+		}
+		// Definately a file
+		if len(f.Name()) > 0 {
+			// We have a name for the file
+			if f.Name()[0:1] == "." {
+				if h {
+					if e == "*" {
+						return true
+					} else {
+						if p.getExtension(f.Name()) == e {
+							return true
+						} else {
+							return false
+						}
+					}
+				}
+				return false
+			}
+			if e == "*" {
+				return true
+			} else {
+				if p.getExtension(f.Name()) == e {
+					return true
+				} else {
+					return false
+				}
+			}
+		}
+		return true
+	} else if s == 2 {
+		if f.IsDir() {
+			// We have a name for the file
+			if f.Name()[0:1] == "." {
+				if h {
+					return true
+				}
+				return false
+			}
+			return true
+		}
+	}
+	return false
 }
