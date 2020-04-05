@@ -28,13 +28,15 @@ type Path struct {
 }
 
 func New(path string) (Path, error) {
+	p := Path{}
 	if path == "" {
-		fullpath, err := os.Getwd()
+		fullPath, err := os.Getwd()
 		if err != nil {
 			return Path{}, err
 		}
-		p.ensurePathEndSlash()
-		return Path{path: fullpath}, nil
+		p.UpdatePath(fullPath)
+	} else {
+		p.UpdatePath(path)
 	}
 	p.ensurePathEndSlash()
 	return Path{path: path}, nil
@@ -270,7 +272,7 @@ func (p *Path) GetFilenameNoExtension(filename string) string {
 	if n >= 0 {
 		return filename[:n]
 	}
-	return s
+	return filename
 }
 
 func (p *Path) CopyFile(src, dst string) (err error) {
