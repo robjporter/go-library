@@ -95,7 +95,6 @@ func (p *Path) ParentPath() string {
 }
 
 func (p *Path) GetFileMd5(filename string) string {
-	fmt.Println("GetFileMd5: ",p)
 	f, err := os.Open(p.path + filename)
 	if err != nil {
 		panic(err.Error())
@@ -218,8 +217,13 @@ func (p *Path) FileSize(filename string) (int64, error) {
 }
 
 func (p *Path) RelativePath(filename string) string {
-	rfile := filename[len(p.path):]
-	rfile = strings.TrimLeft(rfile, SLASH)
+	rfile := ""
+	if strings.Contains(filename, p.path) {
+		rfile = filename[len(p.path):]
+		rfile = strings.TrimLeft(rfile, SLASH)
+	} else {
+		rfile = strings.TrimLeft(rfile, SLASH)
+	}
 	return rfile
 }
 
