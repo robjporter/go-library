@@ -10,17 +10,14 @@ import (
 
 func main() {
 	p,_ := xpath.New("")
-
-	fmt.Println("")
 	fmt.Println("XPATH *******************************************************")
 	dir, err := filepath.Abs("./")
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(0)
 	}
-	fmt.Println(p)
 	p.UpdatePath(dir)
-	fmt.Println(p)
+
 	fmt.Println("Path:                          >", p.GetRawPath())
 	fmt.Println("Splitpath:                     >", p.SplitPath())
 	fmt.Println("Get Path:                      >", p.GetPath())

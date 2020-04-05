@@ -114,7 +114,7 @@ func (p *Path) GetFileMd5(filename string) string {
 }
 
 func (p *Path) GetPath() string {
-	file := p.FormatPath()
+	//file := p.FormatPath()
 	pos := strings.LastIndex(file, SLASH)
 	return file[0:pos]
 }
