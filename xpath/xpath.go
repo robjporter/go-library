@@ -34,7 +34,7 @@ func New(path string) (Path, error) {
 		if err != nil {
 			return Path{}, err
 		}
-		p.UpdatePath(fullPath))
+		p.UpdatePath(fullPath)
 	} else {
 		p.UpdatePath(path)
 	}
