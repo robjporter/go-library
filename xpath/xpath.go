@@ -42,15 +42,15 @@ func New(path string) (Path, error) {
 }
 
 func (p *Path) ensurePathEndSlash(path string) string {
-	if path[len(path) - 1:len(path)] != SLASH {
+	if path[len(path) - 1:] != SLASH {
 		path += SLASH
 	}
 	return path
 }
 
-func (p *Path) UpdatePath(path string) *Path {
+func (p *Path) UpdatePath(path string) Path {
 	p.path = p.ensurePathEndSlash(path)
-	return p
+	return *p
 }
 
 func (p *Path) SplitPath() []string {

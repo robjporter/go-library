@@ -18,7 +18,9 @@ func main() {
 		fmt.Println(err)
 		os.Exit(0)
 	}
+	fmt.Println(p)
 	p.UpdatePath(dir)
+	fmt.Println(p)
 	fmt.Println("Path:                          >", dir)
 	fmt.Println("Splitpath:                     >", p.SplitPath())
 	fmt.Println("Get Path:                      >", p.GetPath())
