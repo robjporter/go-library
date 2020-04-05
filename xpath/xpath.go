@@ -39,7 +39,7 @@ func New(path string) (Path, error) {
 		p.UpdatePath(path)
 	}
 	p.ensurePathEndSlash()
-	return Path{path: path}, nil
+	return p, nil
 }
 
 func (p *Path) ensurePathEndSlash() *Path{
