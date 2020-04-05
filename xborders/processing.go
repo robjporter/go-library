@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/mattn/go-runewidth"
-	"github.com/robjporter/go-xtools/xgraphics/xdisplay"
+	"github.com/robjporter/go-library/xdisplay"
 )
 
 func processBorder(b borderStyle, spacers int, lines []string, center bool) string {
