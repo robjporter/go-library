@@ -1,5 +1,5 @@
 package aci
-
+/*
 import (
 	"encoding/json"
 	"strings"
@@ -179,3 +179,4 @@ func (a *ACI) IsAdmin() bool {
 	}
 	return false
 }
+*/

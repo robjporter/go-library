@@ -1,5 +1,6 @@
 package aci
 
+/*
 import (
 	"fmt"
 	"strings"
@@ -134,15 +135,6 @@ func alphabetPosition(char string) int64 {
 func alphabetCharacter(position int64) string {
 	return "abcdefghijklmnopqrstuvwxyz"[position-1 : position]
 }
-
-/*
-LATEST MAJOR: > 2  LATEST MINOR: > 2  LATEST RELEASE: > 1  LATEST BUILD: > o
-TRAIN MAJOR: > 2  TRAIN MINOR: > 1  TRAIN RELEASE: > 2  TRAIN BUILD: > e
-CURRENT MAJOR: > 2  CURRENT MINOR: > 0  CURRENT RELEASE: > 2  CURRENT BUILD: > 2
-CURRENT MAJOR: > 2  CURRENT MINOR: > 2  CURRENT RELEASE: > 1  CURRENT BUILD: > 1
-CURRENT MAJOR: > 2  CURRENT MINOR: > 1  CURRENT RELEASE: > 2  CURRENT BUILD: > 2
-CURRENT MAJOR: > 1  CURRENT MINOR: > 2  CURRENT RELEASE: > 3  CURRENT BUILD: > 3
-*/
 
 func GetLatestReleaseTrain(train string) string {
 	if IsLatestReleaseTrain(train) {
@@ -343,3 +335,4 @@ func isInSlice(str []string, train string) bool {
 	}
 	return false
 }
+*/
