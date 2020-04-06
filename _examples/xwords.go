@@ -8,6 +8,6 @@ import (
 )
 
 func main() {
-	word := xwords.Words[rand.Intn(len(xwords.Words)]]
+	word := xwords.Words[rand.Intn(len(xwords.Words))]
 	fmt.Println("Word: ",word)
 }

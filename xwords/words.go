@@ -1,4 +1,4 @@
-package words
+package xwords
 
 // Words ... lots of words
 var Words = []string{
