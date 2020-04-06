@@ -10,9 +10,6 @@ import (
 	"unicode"
 	"unicode/utf8"
 	"time"
-	"crypto/sha1"
-	"encoding/hex"
-	"crypto/sha256"
 	rand2 "crypto/rand"
 	"github.com/robjporter/go-library/xas"
 )
@@ -278,21 +275,6 @@ func Announcement(message string) string {
 	return mess
 }
 
-func Sha1(in string) string {
-	hasher := sha1.New()
-	hasher.Write([]byte(in))
-	out := hasher.Sum(nil)
-
-	return hex.EncodeToString(out)
-}
-
-func Sha256(in string) string {
-	hasher := sha256.New()
-	hasher.Write([]byte(in))
-	out := hasher.Sum(nil)
-
-	return hex.EncodeToString(out)
-}
 
 func MaskString(orig, mask string, revealLength, length int) string {
 

@@ -31,9 +31,17 @@ func main() {
 	fmt.Println(xstrings.RandStringWithLengthLimit(10))
 	fmt.Println(xstrings.RandStringWithLengthLimit(20))
 	fmt.Println(xstrings.RandStringWithLengthLimit(50))
-	fmt.Println(xstrings.Sha1("InString"))
-	fmt.Println(xstrings.Sha256("InString"))
-	fmt.Println(xstrings.MaskString("TESTING", "TESTINGTESTING", 4, 22))
+
+	fmt.Println("")
+	fmt.Println("SECURITY ***************************************************")
+	fmt.Println("Pretty JSON                       >",xstrings.Sha1("InString"))
+	fmt.Println("Pretty JSON                       >",xstrings.Sha256("InString"))
+	fmt.Println("Pretty JSON                       >",xstrings.Sha512("InString"))
+	fmt.Println("Pretty JSON                       >",xstrings.MaskString("TESTING", "TESTINGTESTING", 4, 22))
+	a, _ := xstrings.GenerateSecureString(30, xstrings.CharsASCII)
+	fmt.Println("Generate Secure String            >", a)
+	b, _ := xstrings.GenerateSecureString(30, "abcd")
+	fmt.Println("Generate Secure String 2          >", b)
 
 	fmt.Println(xstrings.Announcement("This is an announcement"))
 
