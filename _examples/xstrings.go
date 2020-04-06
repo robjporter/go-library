@@ -48,8 +48,9 @@ func main() {
 	fmt.Println("")
 	fmt.Println("UUID *******************************************************")
 	g := xstrings.UUIDNewGen()
-	for i := 0; i < *n; i++ {
-		fmt.Println("UUID: ", strconv.Itoa(i),"                     >", g.UUIDNewV4())
+	for i := 0; i < 10; i++ {
+		a := g.UUIDNewV4()
+		fmt.Println("UUID: ", strconv.Itoa(i),"                     >", a.UUIDString())
 	}
 
 	fmt.Println("")
@@ -65,4 +66,14 @@ func main() {
 	fmt.Println("ToOrdinise(23)                    >", xstrings.ToOrdinise(23))
 	fmt.Println("ToOrdinise(24)                    >", xstrings.ToOrdinise(24))
 
+}
+func CToGoString(c [16]byte) string {
+	n := -1
+	for i, b := range c {
+		if b == 0 {
+			break
+		}
+		n = i
+	}
+	return string(c[:n+1])
 }
