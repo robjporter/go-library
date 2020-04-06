@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 
 	"../xstrings"
 )
@@ -43,6 +44,13 @@ func main() {
 	output, _ := xstrings.PrettyJson(x)
 	fmt.Println("Pretty JSON                       >", output)
 	fmt.Println("Compact JSON                      >", xstrings.CompactJSON(output))
+
+	fmt.Println("")
+	fmt.Println("UUID *******************************************************")
+	g := xstrings.UUIDNewGen()
+	for i := 0; i < *n; i++ {
+		fmt.Println("UUID: ", strconv.Itoa(i),"                     >", g.UUIDNewV4())
+	}
 
 	fmt.Println("")
 	fmt.Println("ORDINISE ***************************************************")
