@@ -1,45 +1,76 @@
 package main
 
 import (
+	"log"
 	"bytes"
-	"fmt"
 	"io/ioutil"
+	"os"
+	"path/filepath"
 
 	"github.com/robjporter/go-library/xsecretbox"
 )
 
 func main() {
-	var fileRaw = "./testdata/index.txt"
-	var fileEnc = "./testdata/encrypted.bin"
-
-	msg, err := ioutil.ReadFile(fileRaw)
+	tmpdir, err := ioutil.TempDir("", "testdata")
 	if err != nil {
-		t.Fatalf("ioutil.ReadFile(%s) failed: %v", fileRaw, err)
+		log.Fatalf("ioutil.TempDir() failed: %v", err)
+	}
+	defer os.RemoveAll(tmpdir)
+
+	plainFileTest := filepath.Join("./", "test.txt")
+	plainFileTemp := filepath.Join("testdata", "test.txt")
+	cryptFileTemp := filepath.Join("testdata", "test.bin")
+
+	//testPass := "test"
+
+	msg, err := ioutil.ReadFile(plainFileTest)
+	if err != nil {
+		log.Fatalf("ioutil.ReadFile(%s) failed: %v", plainFileTest, err)
 	}
 
 	// encrypt plain text file
-	err = Seal(fileRaw, fileEnc)
+	err = xsecretbox.Seal(plainFileTest, cryptFileTemp)
 	if err != nil {
-		t.Fatalf("Seal() failed: %v", err)
+		log.Fatalf("Seal() failed: %v", err)
+	}
+	tmp, err := ioutil.ReadFile(cryptFileTemp)
+	if err != nil {
+		log.Fatalf("ioutil.ReadFile(%s) failed: %v", cryptFileTemp, err)
 	}
 
-	tmp, err := ioutil.ReadFile(fileEnc)
-	if err != nil {
-		t.Fatalf("ioutil.ReadFile(%s) failed: %v", fileEnc, err)
+	// encrypting to existing file should file
+	err = xsecretbox.Seal(plainFileTest, cryptFileTemp)
+	if err == nil {
+		log.Fatal("Seal() should fail")
 	}
 
 	// decrypt encrypted file and compare results
-	err = Open(fileEnc, fileRaw)
+	err = xsecretbox.Open(cryptFileTemp, plainFileTemp)
 	if err != nil {
-		t.Fatalf("Seal() failed: %v", err)
+		log.Fatalf("Seal() failed: %v", err)
 	}
-
-	tmp, err = ioutil.ReadFile(fileRaw)
+	tmp, err = ioutil.ReadFile(plainFileTemp)
 	if err != nil {
-		t.Fatalf("ioutil.ReadFile(%s) failed: %v", fileRaw, err)
+		log.Fatalf("ioutil.ReadFile(%s) failed: %v", plainFileTemp, err)
 	}
-
 	if !bytes.Equal(tmp, msg) {
-		t.Fatal("plainFileTemp != plainFileTest")
+		log.Fatal("plainFileTemp != plainFileTest")
+	}
+
+	// decrypting to existing file should fail
+	err = xsecretbox.Open(cryptFileTemp, plainFileTemp)
+	if err == nil {
+		log.Fatal("Open() shoudl fail")
+	}
+
+	if err := os.Remove(plainFileTemp); err != nil {
+		log.Fatalf("os.Remove(%s) failed: %v", plainFileTemp, err)
+	}
+
+	// decrypting with wrong passphrase should fail
+	//testPass = "fail"
+	err = xsecretbox.Open(cryptFileTemp, plainFileTemp)
+	if err == nil {
+		log.Fatalf("Open() with wrong passphrase should fail")
 	}
 }
