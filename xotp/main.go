@@ -2,6 +2,7 @@ package xotp
 
 import (
 	"crypto/hmac"
+	"crypto/sha256"
 	"encoding/binary"
 	"fmt"
 	"hash"
@@ -45,7 +46,7 @@ type totpCounter struct {
 // HMAC OTP implementation.
 // See: http://www.ietf.org/rfc/rfc4226.txt
 func NewHOTPGenerator(secretKey []byte, initCounter uint64, digits int) Generator {
-	return &hotpGenerator{counter: &hotpCounterImpl{nextCounter: initCounter}, digits: digits, hasher: hmac.NewSHA1(secretKey)}
+	return &hotpGenerator{counter: &hotpCounterImpl{nextCounter: initCounter}, digits: digits, hasher: hmac.New(sha256.New,secretKey)}
 }
 
 func (g *hotpGenerator) Generate() string {
