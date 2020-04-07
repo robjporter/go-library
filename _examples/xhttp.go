@@ -28,4 +28,14 @@ func main() {
 	fmt.Println("FAILED:   ",h.GetFailed())
 	fmt.Println("QUICKEST: ",h.GetQuickest())
 	fmt.Println("SLOWEST:  ",h.GetSlowest())
+
+	res, err := xhttp.GetHTTP("https://jsonplaceholder.typicode.com/todos/4", []string{})
+
+	fmt.Println("GET ERROR: ", err)
+	fmt.Println("GET RESULTS: ", res)
+
+	resp, err := xhttp.PostHTTP("https://jsonplaceholder.typicode.com/posts","{title: 'foo',body: 'bar',userId: 1}",[]string{"Content-type=application/json; charset=UTF-8"})
+	fmt.Println("POST ERROR: ", err)
+	fmt.Println("POST RESULTS: ", resp)
+
 }
