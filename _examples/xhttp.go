@@ -20,7 +20,7 @@ func main() {
 	h.SetHitCount(20)
 	h.SetDelay(100*time.Millisecond)
 	h.SetSpread(1*time.Second)
-	h.SetURL("http://localhost:8080")
+	h.SetURL("http://localhost:5000")
 	h.Run()
 
 	fmt.Println("HITS:     ",h.GetHits())

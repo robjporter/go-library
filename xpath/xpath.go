@@ -13,6 +13,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"time"
 )
 
 const (
@@ -42,6 +43,20 @@ func New(path string) (Path, error) {
 		p.UpdatePath(path)
 	}
 	return p, nil
+}
+
+func (p *Path) TempDir() string {
+	return os.TempDir()
+}
+
+func (p *Path) ModTime() (time.Time, error) {
+	fileInfo, err := os.Stat(p.path)
+	if err == nil {
+		return fileInfo.ModTime(), nil
+	} else {
+		epoch, _ := time.Parse("2006-Jan-02", "1970-01-01")
+		return epoch, err
+	}
 }
 
 func (p *Path) ensurePathEndSlash(path string) string {

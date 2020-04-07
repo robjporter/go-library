@@ -44,6 +44,11 @@ func main() {
 		fmt.Println("ListFilesInfo:                 >", pather, " - ", tmp2)
 		fmt.Println("ListFilesSize:                 >", pather, " - ", tmp3)
 	}
+	fmt.Println("XPATH - MODTIME *********************************************")
+	a, _ := p.ModTime()
+	fmt.Println(a)
+	fmt.Println("XPATH - TEMP ************************************************")
+	fmt.Println(p.TempDir())
 	fmt.Println("XPATH - RUN *************************************************")
 	fmt.Println(p.Run("ls",true))
 	fmt.Println("XPATH - ListAll *********************************************")
