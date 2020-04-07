@@ -23,7 +23,7 @@ type Timer struct {
 }
 
 func New(id string) *Timer {
-	return &Timer{id: id}
+	return &Timer{id: id, tasks: make(map[string]Task)}
 }
 
 func (t *Timer) Start(id string) error {
