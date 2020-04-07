@@ -67,7 +67,7 @@ func (t *Timer) Stop(id string) error {
 }
 
 func (t *Timer) ShortSummary() string {
-	return fmt.Sprintf("Timer '"+w.id+"': running time (ms) = %d\n", t.totalElapsed/1000000)
+	return fmt.Sprintf("Timer '"+t.id+"': running time (ms) = %d\n", t.totalElapsed/1000000)
 }
 
 func (t *Timer) LastTaskStarted() string {

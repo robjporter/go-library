@@ -4,18 +4,27 @@ import (
 	"fmt"
 	"time"
 
-	"../xtimer"
+	"github.com/robjporter/go-library/xtimer"
 )
 
 func main() {
+	stopWatch := xtimer.New("Testing")
 
-	xtimer.Timer("main")
+	stopWatch.Start("[<step 1>]")
+	time.Sleep(time.Millisecond * 100)
+	stopWatch.Stop()
 
-	time.Sleep(5 * time.Second)
+	stopWatch.Start("[<step 2>]")
+	time.Sleep(time.Millisecond * 2)
+	stopWatch.Stop()
 
-	xtimer.Timer("step 2")
-	time.Sleep(2 * time.Second)
-	fmt.Println(xtimer.Timer("step 2"))
+	stopWatch.Start("[<step 3>]")
+	time.Sleep(time.Millisecond * 3)
+	stopWatch.Stop()
 
-	fmt.Println(xtimer.Timer("main"))
+	stopWatch.Start("[<step 4>]")
+	time.Sleep(time.Millisecond * 4)
+	stopWatch.Stop()
+
+	fmt.Println(stopWatch.PrettyPrint())
 }
