@@ -26,5 +26,21 @@ func main() {
 	time.Sleep(time.Millisecond * 4)
 	stopWatch.Stop("[<step 4>]")
 
+	stopWatch.Start("[<step 5>]")
+	time.Sleep(time.Millisecond * 100)
+	stopWatch.Stop("[<step 5>]")
+
+	stopWatch.Start("[<step 6>]")
+	time.Sleep(time.Millisecond * 2)
+	stopWatch.Stop("[<step 6>]")
+
+	stopWatch.Start("[<step 7>]")
+	time.Sleep(time.Millisecond * 3)
+	stopWatch.Stop("[<step 7>]")
+
+	stopWatch.Start("[<step 8>]")
+	time.Sleep(time.Millisecond * 4)
+	stopWatch.Stop("[<step 8>]")
+
 	fmt.Println(stopWatch.PrettyPrint())
 }

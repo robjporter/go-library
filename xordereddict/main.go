@@ -23,7 +23,10 @@ func (d *OrderedDict) Set(key string, value interface{}) {
 }
 
 func (d *OrderedDict) Get(key string) interface{} {
-	return d.lookup[key].Value()
+	if _, ok := d.lookup[key]; ok {
+		return d.lookup[key].Value()
+	}
+	return nil
 }
 
 func (d *OrderedDict) Remove(key string) bool {
