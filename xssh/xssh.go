@@ -54,3 +54,4 @@ func (sc *SSHClient) Commands(commands []string) (bytes.Buffer,error) {
 //Close ssh connect
 func (sc *SSHClient) Close() {
 }
+

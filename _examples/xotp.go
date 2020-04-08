@@ -10,7 +10,7 @@ import (
 const (
 	DIGITS       = 6
 	INIT_COUNTER = 141215332523
-	INIT_SECONDS = 0
+	INIT_SECONDS = 30
 	TIME_STEP    = 1
 )
 

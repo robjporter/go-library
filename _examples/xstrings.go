@@ -33,6 +33,10 @@ func main() {
 	fmt.Println(xstrings.RandStringWithLengthLimit(50))
 
 	fmt.Println("")
+	fmt.Println("FORMATTER **************************************************")
+	fmt.Println("Format 1                          >", xstrings.Format("The {} says {}", "cow", "MOO!"))
+
+	fmt.Println("")
 	fmt.Println("SECURITY ***************************************************")
 	fmt.Println("SHA 1                             >",xstrings.Sha1("InString"))
 	fmt.Println("SHA 256                           >",xstrings.Sha256("InString"))

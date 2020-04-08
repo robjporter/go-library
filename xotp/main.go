@@ -6,8 +6,9 @@ import (
 	"encoding/binary"
 	"fmt"
 	"hash"
+	"math/rand"
 	"strconv"
-	"time"
+	//"time"
 )
 
 const (
@@ -57,7 +58,8 @@ func (g *hotpGenerator) Generate() string {
 	counter := g.counter.next()
 
 	binary.Write(hasher, binary.BigEndian, counter)
-	hashValue := hasher.Sum()
+
+	hashValue := hasher.Sum([]byte{})
 	truncatedValue := dynamicTruncate(hashValue)
 	otpValue := truncatedValue % uint32(pow(10, int64(g.digits)))
 
@@ -90,7 +92,7 @@ func (c *hotpCounterImpl) next() uint64 {
 // See: http://tools.ietf.org/id/draft-mraihi-totp-timebased-06.txt
 func NewTOTPGenerator(secretKey []byte, initSeconds int64, timeStepSeconds uint64, digits int) Generator {
 	// use hotpGenerator, with a time-based counter
-	return &hotpGenerator{counter: &totpCounter{initSeconds: initSeconds, timeStepSeconds: timeStepSeconds}, digits: digits, hasher: hmac.NewSHA1(secretKey)}
+	return &hotpGenerator{counter: &totpCounter{initSeconds: initSeconds, timeStepSeconds: timeStepSeconds}, digits: digits, hasher: hmac.New(sha256.New,secretKey)}
 }
 
 func NewDefaultTOTPGenerator(secretKey []byte, digits int) Generator {
@@ -98,7 +100,8 @@ func NewDefaultTOTPGenerator(secretKey []byte, digits int) Generator {
 }
 
 func (c *totpCounter) next() uint64 {
-	diffSeconds := uint64(time.Seconds() - c.initSeconds)
+	r := rand.Int63n(60)
+	diffSeconds := uint64(r - c.initSeconds)
 	return diffSeconds / c.timeStepSeconds
 }
 
