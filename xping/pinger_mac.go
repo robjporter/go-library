@@ -9,13 +9,13 @@ import (
 	"github.com/robjporter/go-library/xping/ping"
 )
 
-type LinuxPinger struct{}
+type MacPinger struct{}
 
 func New() Pinger {
-	return &LinuxPinger{}
+	return &MacPinger{}
 }
 
-func (p *LinuxPinger) Ping(hostname string, times int, delay int) Result {
+func (p *MacPinger) Ping(hostname string, times int, delay int) Result {
 	result := Result{}
 	result.Latency.Min = 1000.0
 
@@ -50,15 +50,15 @@ func (p *LinuxPinger) Ping(hostname string, times int, delay int) Result {
 	return result
 }
 
-type LinuxFallbackPinger struct {
+type MacFallbackPinger struct {
 }
 
-func NewLinuxFallbackPinger() *LinuxFallbackPinger {
-	return &LinuxFallbackPinger{}
+func NewMacFallbackPinger() *MacFallbackPinger {
+	return &MacFallbackPinger{}
 }
 
-func (p *LinuxFallbackPinger) Ping(hostname string, times int, delay int) Result {
-	cmd := exec.Command("/bin/ping", hostname, "-c", fmt.Sprintf("%d", times), "-i", fmt.Sprintf("%d", delay))
+func (p *MacFallbackPinger) Ping(hostname string, times int, delay int) Result {
+	cmd := exec.Command("/sbin/ping", hostname, "-c", fmt.Sprintf("%d", times), "-i", fmt.Sprintf("%d", delay))
 	output, _ := cmd.CombinedOutput()
 	outputStr := string(output)
 

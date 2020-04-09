@@ -8,13 +8,15 @@ import (
 	"syscall"
 	"time"
 	"unsafe"
+
+	"github.com/robjporter/go-library/xping/ping"
 )
 
 type WinPinger struct {
 	handle uintptr
 }
 
-func New() Pinger {
+func New() xping.Pinger {
 	return &WinPinger{IcmpCreateFile()}
 }
 
