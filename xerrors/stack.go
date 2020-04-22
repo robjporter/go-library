@@ -7,10 +7,10 @@ func FirstStackTrace(err error) StackTrace {
 	}
 	for {
 		if s, ok := err.(StackTracer); ok {
-			st = s
+			st = s.StackTrace()
 		}
 		if c, ok := err.(Causer); ok {
-			if prev = c.Cause(); prev != nil {
+			if prev := c.Cause(); prev != nil {
 				err = prev
 				continue
 			}
@@ -29,7 +29,7 @@ func HasStackTrace(err error) bool {
 			return true
 		}
 		if c, ok := err.(Causer); ok {
-			if prev = c.Cause(); prev != nil {
+			if prev := c.Cause(); prev != nil {
 				err = prev
 				continue
 			}

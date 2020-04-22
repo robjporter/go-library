@@ -14,7 +14,7 @@ func trace() StackTrace {
 		return nil
 	}
 	pc = pc[:n] // pass only valid pcs to runtime.CallersFrames
-	ci := CallersFrames(pc)
+	ci := runtime.CallersFrames(pc)
 	var st StackTrace
 	for {
 		frame, more := ci.Next()

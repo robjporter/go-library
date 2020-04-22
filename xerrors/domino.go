@@ -1,7 +1,7 @@
 package xerrors
 
 func (d Domino) Cause() error {
-	return d.c
+	return d.cause
 }
 
 func (d Domino) Error() string {

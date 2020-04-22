@@ -10,7 +10,7 @@ func Cause(err error) error {
 	return nil
 }
 
-func Errorf(format string, a ...interface{}) {
+func Errorf(format string, a ...interface{}) error {
 	return &RootCause{
 		s: fmt.Sprintf(format, a...),
 		st: trace(),
